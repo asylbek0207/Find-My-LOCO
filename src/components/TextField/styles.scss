@@ -1,4 +1,14 @@
 .text-field {
+  &.not-valid {
+    input {
+      border: 1px solid #801d28;
+      &:focus, &:hover, &:active{
+        border: 1px solid #801d28;
+        outline: none;
+      }
+    }
+  }
+
   &__label {
     padding-left: 4px;
   }

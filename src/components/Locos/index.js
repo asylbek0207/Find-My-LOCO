@@ -4,13 +4,13 @@ import {DeleteOutlined, PicRightOutlined} from '@ant-design/icons'
 import './styles.scss'
 import {Button, Space, Table, Tag} from 'antd';
 import {useNavigate} from "react-router";
-import {removeLoco} from "../../store/actions";
+import {removeLoco, setLoading} from "../../store/actions";
 import {useSelector} from "react-redux";
+import Loading from "../Loading";
 
 function Locos() {
     const navigate = useNavigate();
-    const { locos } = useSelector((state) => state);
-    const [loading, setLoading] = useState(false);
+    const { locos, loading } = useSelector((state) => state);
     const [pagination, setPagination] = useState({
         pageSize: 5,
         position: ['bottomCenter']
@@ -83,6 +83,7 @@ function Locos() {
 
     return (
         <PageLayout title={'Локомотивы'}>
+            { loading && <Loading/> }
             <div className="locos">
                 <Button className="locos__button" onClick={openNewLocoForm}>
                     Добавить локомотив
@@ -95,7 +96,6 @@ function Locos() {
                     onChange={onChange}
                     rowKey={record => record.id}
                     pagination={pagination}
-                    loading={loading}
                 />
             </div>
         </PageLayout>

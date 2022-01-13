@@ -19,8 +19,8 @@ export const editLoco = (locoInfo) => {
     })
 }
 
-export const setCurrentLoco = (id) => {
-    store.dispatch({type: 'SET_CURRENT_LOCO', id})
+export const getById = (id) => {
+    return store.getState().locos.find((i) => i.id === id);
 }
 
 export const removeLoco = (id) => {

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import PageLayout from "../PageLayout";
 import './styles.scss'
 import {Button} from "antd";
-import {addNewLoco, editLoco, setCurrentLoco, setLoading} from "../../store/actions";
+import {addNewLoco, editLoco, getById, setLoading} from "../../store/actions";
 import {Form, Formik} from 'formik';
 import * as Yup from 'yup';
 import TextField from "../TextField";
@@ -30,20 +30,25 @@ const initialPoint = [51.196004607608266, 71.40973370522242];
 function LocoForm() {
     const navigate = useNavigate();
     const {id} = useParams();
-    const { currentLoco, loading } = useSelector((state) => state)
-    // const [fields, setFields] = useState(id ? currentLoco : initialValues);
-    const [coords, setCoords] = useState(initialPoint);
+    const { loading } = useSelector((state) => state)
+
+    const [fields, setFields] = useState();
+    const [coords, setCoords] = useState();
 
     useEffect(() => {
         if (id) {
             setLoading(true);
-            setCurrentLoco(parseInt(id));
-            // setFields(currentLoco);
+            const currentLoco = getById(parseInt(id));
+            setFields(currentLoco);
+            setCoords(currentLoco.latlong);
             setTimeout(() => {
                 setLoading(false);
-            }, getRandomRange());
+            })
+        } else {
+            setFields(initialValues);
+            setCoords(initialPoint);
         }
-    }, [id, currentLoco]);
+    }, [id])
 
     const createLoco = (values) => {
         setLoading(true);
@@ -52,8 +57,7 @@ function LocoForm() {
                 ...values,
                 latlong: coords
             });
-            setCurrentLoco(0);
-            navigate('/locos');
+            navigate(-1);
             setLoading(false);
         }, getRandomRange())
     }
@@ -65,8 +69,7 @@ function LocoForm() {
                 ...values,
                 latlong: coords
             });
-            setCurrentLoco(0);
-            navigate('/locos');
+            navigate(-1);
             setLoading(false);
         }, getRandomRange())
     }
@@ -81,42 +84,43 @@ function LocoForm() {
 
     const onCLickMap = (e) => {
         setCoords(e.get('coords'));
+    };
+
+    if (!fields) {
+        return <Loading />
     }
 
     return (
         <PageLayout title={id ? `Локомотив №${id}` : 'Новый локомотив'}>
             <div className="loco-form">
-                <Formik initialValues={currentLoco} validationSchema={validationScheme} onSubmit={submit}>
+                { loading && <Loading /> }
+                <Formik initialValues={fields} validationSchema={validationScheme} onSubmit={submit}>
                     {({values, submitForm, errors, touched, validateForm}) => (
                         <Form>
-                            {
-                                loading ? <Loading /> : (
-                                    <div className="loco-form__fields">
-                                        <TextField
-                                            label={'Наименование'}
-                                            name={'name'}
-                                            value={values.name}
-                                            errors={errors}
-                                            touched={touched}
-                                        />
-                                        <TextField
-                                            label={'Серия'}
-                                            name={'serial'}
-                                            value={values.serial}
-                                            errors={errors}
-                                            touched={touched}
-                                        />
-                                        <TextField
-                                            label={'Количество секции'}
-                                            name={'sectionCount'}
-                                            value={values.sectionCount}
-                                            type="number"
-                                            errors={errors}
-                                            touched={touched}
-                                        />
-                                    </div>
-                                )
-                            }
+                            <div className="loco-form__fields">
+                                <TextField
+                                    label={'Наименование'}
+                                    name={'name'}
+                                    value={values.name}
+                                    errors={errors}
+                                    touched={touched}
+                                />
+                                <TextField
+                                    label={'Серия'}
+                                    name={'serial'}
+                                    value={values.serial}
+                                    errors={errors}
+                                    touched={touched}
+                                />
+                                <TextField
+                                    label={'Количество секции'}
+                                    name={'sectionCount'}
+                                    value={values.sectionCount}
+                                    type="number"
+                                    errors={errors}
+                                    touched={touched}
+                                />
+                            </div>
                             <div className="loco-form__coords">
                                 <b>Широта:</b> {coords[0]} <b>Долгота:</b> {coords[1]}
                             </div>
@@ -145,6 +149,11 @@ function LocoForm() {
                                 className="loco-form__button"
                                 onClick={submitForm}>
                                 Сохранить
+                            </Button>
+                            <Button
+                                className="loco-form__button loco-form__button--red"
+                                onClick={() => navigate(-1)}>
+                                Назад
                             </Button>
                         </Form>
                     )}

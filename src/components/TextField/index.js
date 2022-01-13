@@ -3,12 +3,14 @@ import React from "react";
 import './styles.scss';
 
 function TextField({name, label, errors, touched, ...props}) {
+    const notValid = errors[name] && touched[name];
+
     return (
-        <div className="text-field">
+        <div className={notValid ? 'text-field not-valid' : 'text-field'}>
             <div className="text-field__label">{label}</div>
             <Field name={name} {...props} />
             <div className="text-field__helper-text">
-                {errors[name] && touched[name] ? errors[name] : ''}
+                { notValid ? errors[name] : '' }
             </div>
         </div>
     )

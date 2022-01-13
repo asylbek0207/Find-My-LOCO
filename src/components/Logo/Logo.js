@@ -7,7 +7,7 @@ const Logo = () => {
     const navigate  = useNavigate();
 
     const goHome = () => {
-        navigate('/')
+        navigate('/locos')
     };
 
     return (

@@ -15,11 +15,6 @@ export const initialState = {
             serial: "777"
         }
     ],
-    currentLoco: {
-        name: '',
-        serial: '',
-        sectionCount: '',
-    },
     loading: false
 }
 
@@ -30,15 +25,6 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 loading: action.loading
             }
-        case 'SET_CURRENT_LOCO':
-            return {
-                ...state,
-                currentLoco: state.locos.find((i) => i.id === action.id) || {
-                    name: '',
-                    serial: '',
-                    sectionCount: '',
-                }
-            };
         case 'ADD_LOCO':
             return {
                 ...state,
