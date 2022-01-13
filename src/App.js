@@ -1,24 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import Logo from "./components/Logo/Logo";
+import {Layout, Menu} from "antd";
+import React from "react";
+const { Header, Content, Sider } = Layout;
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+      <Layout>
+          <Sider
+              breakpoint="lg"
+              collapsedWidth="0"
+              onBreakpoint={broken => {
+                  console.log(broken);
+              }}
+              onCollapse={(collapsed, type) => {
+                  console.log(collapsed, type);
+              }}
+          >
+              <Logo />
+              <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+                  <Menu.Item key="1">
+                      Локомотивы
+                  </Menu.Item>
+                  <Menu.Item key="2">
+                      Карта
+                  </Menu.Item>
+              </Menu>
+          </Sider>
+          <Layout>
+              <Header className="header" />
+              <Content className="content" style={{ margin: '24px 16px 0' }}>
+                  <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
+                      content
+                  </div>
+              </Content>
+          </Layout>
+      </Layout>
   );
 }
 

@@ -1,0 +1,17 @@
+.logo {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  color: #cbfad2;
+  padding: 16px;
+
+  h3 {
+    color: #cbfad2;
+    font-weight: 700;
+  }
+
+  .anticon-branches {
+    font-size: 25px;
+    margin-right: 10px;
+  }
+}

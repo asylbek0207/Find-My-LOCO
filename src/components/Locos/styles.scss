@@ -1,0 +1,53 @@
+.locos {
+  &__button {
+    -webkit-box-shadow: 0px 0px 30px 0px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0px 0px 30px 0px rgba(34, 60, 80, 0.2);
+    box-shadow: 0px 0px 30px 0px rgba(34, 60, 80, 0.2);
+    margin-bottom: 20px;
+    border-radius: 20px;
+
+    &.ant-btn:hover, &.ant-btn:focus, &.ant-btn:active {
+      color: #39AEA9;
+      border-color: #39AEA9;
+    }
+  }
+
+  &__table {
+    a:hover {
+      color: #08a29c;
+    }
+
+    .ant-spin-container {
+      -webkit-box-shadow: 0px 0px 30px 0px rgba(34, 60, 80, 0.2);
+      -moz-box-shadow: 0px 0px 30px 0px rgba(34, 60, 80, 0.2);
+      box-shadow: 0px 0px 30px 0px rgba(34, 60, 80, 0.2);
+
+      .ant-table-content {
+        overflow-y: auto;
+
+        .ant-btn:hover, .ant-btn:focus, .ant-btn:active {
+          color: #39AEA9;
+          border-color: #39AEA9;
+        }
+      }
+    }
+
+    .ant-pagination {
+      margin: 0;
+      padding: 16px 0;
+      background-color: #ffffff;
+
+      .ant-pagination-item:hover {
+        border-color: #39AEA9;
+        color: #39AEA9;
+      }
+
+      .ant-pagination-item-active {
+        border-color: #39AEA9;
+      }
+      .ant-pagination-item-active a {
+        color: #39AEA9;
+      }
+    }
+  }
+}
